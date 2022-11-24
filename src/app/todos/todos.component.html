@@ -23,6 +23,6 @@
     <div class="small text-secondary">{{ todo.date | date }}</div>
   </div>
 </div>
-
+<router-outlet></router-outlet>
 <!-- No data -->
 <div *ngIf="!todos.length" class="text-secondary">You have no todos.</div>

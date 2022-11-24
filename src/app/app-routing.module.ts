@@ -5,7 +5,14 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./todos/todos.module').then(m => m.TodosModule),
+    
   },
+  
+    { path: 'new',
+    loadChildren: ()=>import('./todos/create-todo/create-todo.module').then(m=>m.CreateTodoModule)
+   }
+  
+
 ];
 
 @NgModule({

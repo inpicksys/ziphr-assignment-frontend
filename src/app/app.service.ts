@@ -17,19 +17,19 @@ export class AppService {
    * Components can watch and make changes to the list.
    */
   readonly todos: BehaviorSubject<Todo[]> = new BehaviorSubject<Todo[]>([]);
-
+  private storedTodos: string | null = localStorage.getItem(this.todosKey);
   constructor() {
     console.debug('AppService initiated.');
     /** Load initial value. */
     console.debug('Loading todos from localStorage.');
-    let storedTodos: string | null = localStorage.getItem(this.todosKey);
+    
     /** Checking if we should save fake data. */
-    if (!storedTodos) {
+    if (!this.storedTodos) {
       console.debug('Loading fake todos since localStorage is empty.');
-      storedTodos = JSON.stringify(FakeTodos);
+      this.storedTodos = JSON.stringify(FakeTodos);
     }
     /** Emit initial value to the subject. */
-    this.todos.next(JSON.parse(storedTodos));
+    this.todos.next(JSON.parse(this.storedTodos));
     /** Watch to save new changes to localStorage. */
     this.todos.subscribe({
       next: (value: Todo[]): void => {
@@ -37,5 +37,13 @@ export class AppService {
         localStorage.setItem(this.todosKey, JSON.stringify(value));
       },
     });
+  }
+
+  addTodo(todo: Todo) {
+    localStorage.setItem(this.todosKey, JSON.stringify(todo));
+    // if (!this.storedTodos) {
+    //   this.storedTodos = 
+    //   this.todos.next(JSON.parse());
+    // }
   }
 }
